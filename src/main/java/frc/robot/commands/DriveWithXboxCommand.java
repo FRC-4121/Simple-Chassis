@@ -9,19 +9,19 @@ package frc.robot.commands;
 
 import static frc.robot.Constants.*;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.GenericDrivetrain;
 
-public class DriveWithJoysticksCommand extends CommandBase {
+public class DriveWithXboxCommand extends CommandBase {
   /**
    * Creates a new DriveWithJoysticksCommand.
    */
   private GenericDrivetrain drive;
-  private Joystick leftJoy = new Joystick(LEFT_JOY_PORT);
-  private Joystick rightJoy = new Joystick(RIGHT_JOY_PORT);
+  private XboxController xbox = new XboxController(XBOX_PORT);
 
-  public DriveWithJoysticksCommand(GenericDrivetrain drivetrain) {
+  public DriveWithXboxCommand(GenericDrivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     drive = drivetrain;
@@ -39,12 +39,12 @@ public class DriveWithJoysticksCommand extends CommandBase {
     if(DrivetrainConstants.DRIVETRAIN_TYPE == 0){
 
       //West Coast
-      drive.drive(leftJoy.getX(), leftJoy.getY(), rightJoy.getX(), rightJoy.getY());
+      drive.drive(xbox.getX(Hand.kLeft), xbox.getY(Hand.kLeft), xbox.getX(Hand.kRight), xbox.getY(Hand.kRight));
     }
     else if(DrivetrainConstants.DRIVETRAIN_TYPE == 1){
       
       //Mecanum
-      drive.drive(leftJoy.getX(), leftJoy.getY(), leftJoy.getZ(), false);
+      drive.drive(xbox.getX(Hand.kLeft), xbox.getY(Hand.kLeft), xbox.getX(Hand.kRight), false);
     }
 
   }

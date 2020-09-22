@@ -17,14 +17,30 @@ package frc.robot;
  */
 public final class Constants {
 
+    //Controller ports
+    public static final int XBOX_PORT = 0;
+    public static final int LEFT_JOY_PORT = 1;
+    public static final int RIGHT_JOY_PORT = 2;
+    public static final int GAMEPAD_PORT = 3;
+
     public static final class DrivetrainConstants {
 
+        //0 is West Coast, 1 is Mecanum
+        public static final int DRIVETRAIN_TYPE = 0;
+
+        //For West Coast, indicates the number of motors per robot side.  ONLY 2 OR 3!!!
+        public static final int MOTOR_COUNT = 2;
+
+        //Motor Controller IDs
         public static final int LEFT_MOTOR_1 = -1;
         public static final int LEFT_MOTOR_2 = -1;
         public static final int LEFT_MOTOR_3 = -1;
         public static final int RIGHT_MOTOR_1 = -1;
         public static final int RIGHT_MOTOR_2 = -1;
         public static final int RIGHT_MOTOR_3 = -1;
+
+        //Direction Control
+        public static int DIRECTION_MULTIPLIER = 1;
 
     }
 }

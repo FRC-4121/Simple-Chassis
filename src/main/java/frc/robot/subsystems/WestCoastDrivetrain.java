@@ -10,6 +10,10 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.DrivetrainConstants.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 public class WestCoastDrivetrain extends GenericDrivetrain {
   /**
    * Creates a new WestCoastDrivetrain.
@@ -18,12 +22,31 @@ public class WestCoastDrivetrain extends GenericDrivetrain {
   private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(LEFT_MOTOR_1);
   private WPI_TalonSRX leftMotor2 = new WPI_TalonSRX(LEFT_MOTOR_2);
   private WPI_TalonSRX leftMotor3 = new WPI_TalonSRX(LEFT_MOTOR_3);
+
   private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RIGHT_MOTOR_1);
   private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RIGHT_MOTOR_2);
   private WPI_TalonSRX rightMotor3 = new WPI_TalonSRX(RIGHT_MOTOR_3);
+  
+  private SpeedControllerGroup leftMotorGroup;
+  private SpeedControllerGroup rightMotorGroup;
 
+  private DifferentialDrive drivetrain;
 
   public WestCoastDrivetrain() {
+
+    if (MOTOR_COUNT == 2)
+    {
+      leftMotorGroup = new SpeedControllerGroup(leftMotor1, leftMotor2);
+      rightMotorGroup = new SpeedControllerGroup(rightMotor1, rightMotor2);
+    }
+    else if (MOTOR_COUNT == 3)
+    {
+      leftMotorGroup = new SpeedControllerGroup(leftMotor1, leftMotor2, leftMotor3);
+      rightMotorGroup = new SpeedControllerGroup(rightMotor1, rightMotor2, rightMotor3);
+    }
+
+    drivetrain = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
+
 
   }
 
@@ -31,4 +54,20 @@ public class WestCoastDrivetrain extends GenericDrivetrain {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  @Override
+  public void drive(double leftJoyX, double leftJoyY, double rightJoyX, double rightJoyY){
+
+    if(DIRECTION_MULTIPLIER == 1){
+
+      drivetrain.tankDrive(DIRECTION_MULTIPLIER * leftJoyY, DIRECTION_MULTIPLIER * rightJoyY);   
+    
+    }
+    else{
+
+      drivetrain.tankDrive(DIRECTION_MULTIPLIER * rightJoyY, DIRECTION_MULTIPLIER * leftJoyY); 
+    
+    }
+  }
+  
 }

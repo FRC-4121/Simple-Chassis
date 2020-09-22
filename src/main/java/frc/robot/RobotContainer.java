@@ -8,9 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.InstantCommand;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+import static frc.robot.Constants.*;
+import static frc.robot.Constants.DrivetrainConstants.*;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -21,18 +26,47 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  //Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private GenericDrivetrain drivetrain;
 
+  //Commands
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final DriveWithJoysticksCommand joysticksCommand = new DriveWithJoysticksCommand(drivetrain);
+  private final DriveWithXboxCommand xboxCommand = new DriveWithXboxCommand(drivetrain);
+  private final InstantCommand switchDirection = new InstantCommand(drivetrain::switchDirection, drivetrain);
 
+  //OI Devices
+  private final XboxController xbox = new XboxController(XBOX_PORT);
+  private final Joystick leftJoy = new Joystick(LEFT_JOY_PORT);
+  private final Joystick rightJoy = new Joystick(RIGHT_JOY_PORT);
+  private final Joystick gamepad = new Joystick(GAMEPAD_PORT);
 
+  //Buttons
+  private JoystickButton invertDirection_joy = new JoystickButton(rightJoy, 2);
+  private JoystickButton invertDirection_xbox = new JoystickButton(xbox, 6);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+
+    //Set up drivetrain
+    switch(DRIVETRAIN_TYPE) {
+      case 0:
+        drivetrain = new WestCoastDrivetrain();
+        break;
+      case 1:
+        drivetrain = new MecanumDrivetrain();
+        break;
+      default:
+        drivetrain = new WestCoastDrivetrain();
+    }
+
     // Configure the button bindings
     configureButtonBindings();
+
+    drivetrain.setDefaultCommand(joysticksCommand);
   }
 
   /**
@@ -42,8 +76,15 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    invertDirection_joy.whenPressed(new InstantCommand(drivetrain::switchDirection, drivetrain));
+    invertDirection_xbox.whenPressed(new InstantCommand(drivetrain::switchDirection, drivetrain)); 
   }
 
+
+  private edu.wpi.first.wpilibj.command.Command InstantCommand(Object object, GenericDrivetrain drivetrain2) {
+    return null;
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

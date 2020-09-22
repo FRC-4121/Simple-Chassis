@@ -29,13 +29,6 @@ public class GenericDrivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  //Specific a default command
-  public void initDefaultCommand() {
-        
-    //All drive trains have default command to drive with the joysticks
-      setDefaultCommand(new DriveWithJoysticksCommand());
-  }
-  
   //Method for driving during Teleop - used for WCD
   public void drive(double leftJoyX, double leftJoyY, double rightJoyX, double rightJoyY) {}
   
@@ -47,5 +40,10 @@ public class GenericDrivetrain extends SubsystemBase {
 
   //Method for driving during Autonomous - used for Mecanum
   public void autoDrive(double speed, double angle, double rotation) {}
+
+  //Direction switching for manueverabiltiy
+  public void switchDirection(){
+    DIRECTION_MULTIPLIER *= -1;
+  }
 
 }
