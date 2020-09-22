@@ -34,7 +34,7 @@ public class RobotContainer {
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveWithJoysticksCommand joysticksCommand = new DriveWithJoysticksCommand(drivetrain);
   private final DriveWithXboxCommand xboxCommand = new DriveWithXboxCommand(drivetrain);
-  private final InstantCommand switchDirection = new InstantCommand(drivetrain::switchDirection, drivetrain);
+  private final InstantCommand switchDirection = new InstantCommand(drivetrain::switchDirection);
 
   //OI Devices
   private final XboxController xbox = new XboxController(XBOX_PORT);
@@ -66,7 +66,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    drivetrain.setDefaultCommand(joysticksCommand);
+    drivetrain.setDefaultCommand(xboxCommand);
   }
 
   /**
@@ -77,13 +77,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    invertDirection_joy.whenPressed(new InstantCommand(drivetrain::switchDirection, drivetrain));
-    invertDirection_xbox.whenPressed(new InstantCommand(drivetrain::switchDirection, drivetrain)); 
-  }
-
-
-  private edu.wpi.first.wpilibj.command.Command InstantCommand(Object object, GenericDrivetrain drivetrain2) {
-    return null;
+    invertDirection_joy.whenPressed(switchDirection);
+    invertDirection_xbox.whenPressed(switchDirection); 
   }
 
   /**
