@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -46,6 +47,9 @@ public class RobotContainer {
   private JoystickButton invertDirection_joy = new JoystickButton(rightJoy, 2);
   private JoystickButton invertDirection_xbox = new JoystickButton(xbox, 6);
 
+  //Camera
+  private UsbCamera driverCam = new UsbCamera("Driver Cam", 0);
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -57,15 +61,21 @@ public class RobotContainer {
         drivetrain = new WestCoastDrivetrain();
         break;
       case 1:
-        drivetrain = new MecanumDrivetrain();
+        drivetrain = new MecanumDrivetrain();//note that mecanum is not currently supported
         break;
       default:
         drivetrain = new WestCoastDrivetrain();
     }
 
+    //Set up camera
+    driverCam.setBrightness(50);
+    driverCam.setResolution(640, 480);
+    driverCam.setFPS(15);
+
     // Configure the button bindings
     configureButtonBindings();
 
+    //Enable xbox driving
     drivetrain.setDefaultCommand(xboxCommand);
   }
 
