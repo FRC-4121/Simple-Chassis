@@ -9,10 +9,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.DrivetrainConstants.*;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.DriveWithJoysticksCommand;
 
 
 public class GenericDrivetrain extends SubsystemBase {
