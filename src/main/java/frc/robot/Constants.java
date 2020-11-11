@@ -33,14 +33,14 @@ public final class Constants {
 
         //Motor Controller IDs
         public static final int LEFT_MOTOR_1 = 2;
-        public static final int LEFT_MOTOR_2 = 4;
+        public static final int LEFT_MOTOR_2 = 3;
         public static final int LEFT_MOTOR_3 = -1;
-        public static final int RIGHT_MOTOR_1 = 0;
-        public static final int RIGHT_MOTOR_2 = 1;
+        public static final int RIGHT_MOTOR_1 = 6;
+        public static final int RIGHT_MOTOR_2 = 7;
         public static final int RIGHT_MOTOR_3 = -1;
 
         //Direction Control
-        public static int DIRECTION_MULTIPLIER = 1;
+        public static double DIRECTION_MULTIPLIER = 1;
 
     }
 }

@@ -11,8 +11,8 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.*;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import static frc.robot.Constants.*;
@@ -29,13 +29,13 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private GenericDrivetrain drivetrain;
+  private WestCoastDrivetrain drivetrain = new WestCoastDrivetrain();
 
   //Commands
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final DriveWithJoysticksCommand joysticksCommand = new DriveWithJoysticksCommand(drivetrain);
   private final DriveWithXboxCommand xboxCommand = new DriveWithXboxCommand(drivetrain);
-  private final InstantCommand switchDirection = new InstantCommand(drivetrain::switchDirection);
+  // private final InstantCommand switchDirection = new InstantCommand(drivetrain::switchDirection);
 
   //OI Devices
   private final XboxController xbox = new XboxController(XBOX_PORT);
@@ -55,17 +55,18 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
+    //Evidently doesn't work under the new system, sadly :(
     //Set up drivetrain
-    switch(DRIVETRAIN_TYPE) {
-      case 0:
-        drivetrain = new WestCoastDrivetrain();
-        break;
-      case 1:
-        drivetrain = new MecanumDrivetrain();//note that mecanum is not currently supported
-        break;
-      default:
-        drivetrain = new WestCoastDrivetrain();
-    }
+    // switch(DRIVETRAIN_TYPE) {
+    //   case 0:
+    //     drivetrain = new WestCoastDrivetrain();
+    //     break;
+    //   case 1:
+    //     drivetrain = new MecanumDrivetrain();//note that mecanum is not currently supported
+    //     break;
+    //   default:
+    //     drivetrain = new WestCoastDrivetrain();
+    // }
 
     //Set up camera
     driverCam.setBrightness(50);
@@ -87,8 +88,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    invertDirection_joy.whenPressed(switchDirection);
-    invertDirection_xbox.whenPressed(switchDirection); 
+    // invertDirection_joy.whenPressed(switchDirection);
+    invertDirection_xbox.whenPressed(new InstantCommand(drivetrain::switchDirection, drivetrain)); 
   }
 
   /**

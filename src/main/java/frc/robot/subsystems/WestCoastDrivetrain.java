@@ -57,16 +57,23 @@ public class WestCoastDrivetrain extends GenericDrivetrain {
   @Override
   public void drive(double leftJoyX, double leftJoyY, double rightJoyX, double rightJoyY){
 
+    double speedcap = .8;
+
     if(DIRECTION_MULTIPLIER == 1){
 
-      drivetrain.tankDrive(DIRECTION_MULTIPLIER * leftJoyY, DIRECTION_MULTIPLIER * rightJoyY);   
+      drivetrain.tankDrive(speedcap * DIRECTION_MULTIPLIER * leftJoyY, speedcap * DIRECTION_MULTIPLIER * rightJoyY);   
     
     }
     else{
 
-      drivetrain.tankDrive(DIRECTION_MULTIPLIER * rightJoyY, DIRECTION_MULTIPLIER * leftJoyY); 
+      drivetrain.tankDrive(speedcap * DIRECTION_MULTIPLIER * rightJoyY, speedcap * DIRECTION_MULTIPLIER * leftJoyY); 
     
     }
   }
   
+  //Direction switching for manueverabiltiy
+  public void switchDirection(){
+    DIRECTION_MULTIPLIER *= -1;
+    
+  }
 }

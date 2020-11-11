@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import static frc.robot.Constants.*;
+import static frc.robot.Constants.DrivetrainConstants.*;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -36,16 +37,16 @@ public class DriveWithXboxCommand extends CommandBase {
   @Override
   public void execute() {
 
-    if(DrivetrainConstants.DRIVETRAIN_TYPE == 0){
-
-      //West Coast
-      drive.drive(xbox.getX(Hand.kLeft), xbox.getY(Hand.kLeft), xbox.getX(Hand.kRight), xbox.getY(Hand.kRight));
-    }
-    else if(DrivetrainConstants.DRIVETRAIN_TYPE == 1){
+    // if(DrivetrainConstants.DRIVETRAIN_TYPE == 0){
       
-      //Mecanum
-      drive.drive(xbox.getX(Hand.kLeft), xbox.getY(Hand.kLeft), xbox.getX(Hand.kRight), false);
-    }
+      //West Coast
+    drive.drive(xbox.getX(Hand.kLeft), -xbox.getY(Hand.kLeft), xbox.getX(Hand.kRight), -xbox.getY(Hand.kRight));
+    // }
+    // else if(DrivetrainConstants.DRIVETRAIN_TYPE == 1){
+      
+    //   //Mecanum
+    //   drive.drive(xbox.getX(Hand.kLeft), xbox.getY(Hand.kLeft), xbox.getX(Hand.kRight), false);
+    // }
 
   }
 
